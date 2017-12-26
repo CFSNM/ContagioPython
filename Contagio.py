@@ -1,19 +1,19 @@
 import click
 
 @click.group()
-@click.option('--matriz',
-              default='matriz',
-               help='Matriz de adyacencia')
+@click.option('--archivomatriz',
+              prompt=True,
+              help='Ruta donde se encuentra definida la matriz de adyacencia')
 @click.pass_context
-def cli(ctx,matriz):
-    ctx.obj = matriz
+def cli(ctx,archivomatriz):
+    ctx.obj = archivomatriz
 
 @cli.command(name='ejecutarAlgoritmo')
 @click.option('--semillauno',
-              default=1,
+              default=7,
               help='Semilla numero 1')
 @click.option('--semillados',
-              default=2,
+              default=8,
               help='Semilla numero 2')
 @click.option('--umbral',
               default=0.4,
@@ -21,11 +21,18 @@ def cli(ctx,matriz):
 @click.pass_context
 def ejec_algoritmo(ctx,semillauno,semillados,umbral):
 
-     matriz = ctx.obj
+     matriz = extraer_matriz(ctx.obj)
      click.echo(matriz)
      click.echo(semillauno)
      click.echo(semillados)
      click.echo(umbral)
+
+def extraer_matriz(path):
+
+    matriz = []
+
+    return matriz
+
 
 
 
