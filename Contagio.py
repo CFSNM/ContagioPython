@@ -64,7 +64,6 @@ def ejec_algoritmo(ctx,semillauno,semillados,umbral):
          nodos_contagiados = actualizar_nodos_contagiados(nodos_contagiados, nuevos_nodos_contagiados)
 
 
-
 def extraer_matriz(path):
 
     file = open(path,'r')
