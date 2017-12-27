@@ -10,10 +10,10 @@ def cli(ctx,archivomatriz):
 
 @cli.command(name='ejecutarAlgoritmo')
 @click.option('--semillauno',
-              default=7,
+              default=6,
               help='Semilla numero 1')
 @click.option('--semillados',
-              default=8,
+              default=7,
               help='Semilla numero 2')
 @click.option('--umbral',
               default=0.4,
@@ -22,14 +22,20 @@ def cli(ctx,archivomatriz):
 def ejec_algoritmo(ctx,semillauno,semillados,umbral):
 
      matriz = extraer_matriz(ctx.obj)
-     click.echo(matriz)
-     click.echo(semillauno)
-     click.echo(semillados)
-     click.echo(umbral)
+     print('Los nodos contagiados inicialmente son '+str(semillauno)+' y '+str(semillados))
+     print('El umbral de contagio es '+str(umbral))
+
 
 def extraer_matriz(path):
 
     matriz = []
+    file = open(path)
+    filas = file.readlines()
+    print('La matriz de adyacencia es ')
+    for fila in filas:
+        fila = fila.split()
+        matriz.append(fila)
+        print(fila)
 
     return matriz
 
