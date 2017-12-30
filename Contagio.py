@@ -4,7 +4,7 @@ import numpy as np
 @click.group()
 @click.option('--archivomatriz',
               prompt=True,
-              help='Ruta donde se encuentra definida la matriz de adyacencia')
+              help='Ruta del archivo donde se encuentra definida la matriz de adyacencia')
 @click.pass_context
 def cli(ctx,archivomatriz):
     ctx.obj = archivomatriz
@@ -12,10 +12,10 @@ def cli(ctx,archivomatriz):
 @cli.command(name='ejecutarAlgoritmo')
 @click.option('--semillauno',
               default=6,
-              help='Semilla numero 1')
+              help='Primer nodo contagiado inicialmente')
 @click.option('--semillados',
               default=7,
-              help='Semilla numero 2')
+              help='Segundo nodo contagiado inicialmente')
 @click.option('--umbral',
               default=0.4,
               help='Umbral para establecer contagio')
