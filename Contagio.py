@@ -23,46 +23,51 @@ def cli(ctx,archivomatriz):
 def ejec_algoritmo(ctx,semillauno,semillados,umbral):
 
      A = extraer_matriz(ctx.obj)
-     numero_nodos = len(A)
-     print('La matriz de adyacencia A es ')
-     print(A)
-     print('Los nodos contagiados inicialmente son '+str(semillauno)+' y '+str(semillados))
-     print('El umbral de contagio es '+str(umbral))
+     nodos_contagiados = algoritmo(A,semillauno,semillados,umbral)
 
-     nodos_contagiados = np.zeros((1, numero_nodos))
-     nodos_contagiados[0][semillauno] = 1
-     nodos_contagiados[0][semillados] = 1
 
-     print('**********************************************')
-     print('EMPIEZA EL ALGORITMO')
+def algoritmo(A,semillauno,semillados,umbral):
+    numero_nodos = len(A)
+    print('La matriz de adyacencia A es ')
+    print(A)
+    print('Los nodos contagiados inicialmente son ' + str(semillauno) + ' y ' + str(semillados))
+    print('El umbral de contagio es ' + str(umbral))
 
-     iter = 1
-     while(True):
-         nuevos_nodos_contagiados = []
-         print('**********************************************')
-         print('**********************************************')
-         print('Iteración nº'+str(iter))
-         print('**********************************************')
-         for nodo in range(numero_nodos):
-            if(nodos_contagiados[0][nodo] == 1):
+    nodos_contagiados = np.zeros((1, numero_nodos))
+    nodos_contagiados[0][semillauno] = 1
+    nodos_contagiados[0][semillados] = 1
+
+    print('**********************************************')
+    print('EMPIEZA EL ALGORITMO')
+
+    iter = 1
+    while (True):
+        nuevos_nodos_contagiados = []
+        print('**********************************************')
+        print('**********************************************')
+        print('Iteración nº' + str(iter))
+        print('**********************************************')
+        for nodo in range(numero_nodos):
+            if (nodos_contagiados[0][nodo] == 1):
                 continue
             fila = A[nodo, :]
             nodos_totales_nodo = sum(fila)
             nodos_contagiados_nodo = sum(np.multiply(fila, nodos_contagiados[0, :]))
-            umbral_nodo = nodos_contagiados_nodo/nodos_totales_nodo
-            if(umbral_nodo >= umbral):
+            umbral_nodo = nodos_contagiados_nodo / nodos_totales_nodo
+            if (umbral_nodo >= umbral):
                 nuevos_nodos_contagiados.append(nodo)
-                print('El nodo '+str(nodo)+' ha sido contagiado')
+                print('El nodo ' + str(nodo) + ' ha sido contagiado')
 
+        if (len(nuevos_nodos_contagiados) == 0):
+            print('No hay nuevos nodos contagiados en la iteración nº' + str(iter))
+            print('El algoritmo ha terminado...')
+            print('********************************************************')
+            break
 
-         if (len(nuevos_nodos_contagiados) == 0):
-             print('No hay nuevos nodos contagiados en la iteración nº'+str(iter))
-             print('El algoritmo ha terminado...')
-             break
+        iter = iter + 1
+        nodos_contagiados = actualizar_nodos_contagiados(nodos_contagiados, nuevos_nodos_contagiados)
 
-         iter = iter + 1
-         nodos_contagiados = actualizar_nodos_contagiados(nodos_contagiados, nuevos_nodos_contagiados)
-
+        return nodos_contagiados
 
 def extraer_matriz(path):
 
@@ -71,7 +76,6 @@ def extraer_matriz(path):
     num_nodos = len(filas)
     matriz = np.zeros((num_nodos, num_nodos))
     cont_fila = 0
-    cont_col = 0
     for fila in filas:
         elementos = fila.split()
         cont_col = 0
